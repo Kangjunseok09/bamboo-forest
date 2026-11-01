@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 {% block content %}
 
+{# 좋아요 많은 글 5개 #}
 <div class="box">
   <h2>🔥 좋아요 TOP 5</h2>
   <ol>
@@ -10,11 +11,13 @@
   </ol>
 </div>
 
+{# 검색: ?q=검색어 로 전송 #}
 <form action="/" method="get" class="search">
   <input type="text" name="q" value="{{ q }}" placeholder="제목 검색">
   <button class="btn">검색</button>
 </form>
 
+{# 글 목록 #}
 {% for post in posts %}
   <a href="/post/{{ post.id }}" class="box post">
     <b>{{ post.title }}</b>

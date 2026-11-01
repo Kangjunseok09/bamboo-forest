@@ -3,6 +3,7 @@
 
 <div class="box">
   <h1>글쓰기</h1>
+  {# 새 글이면 빈칸, 수정이면 기존 내용이 채워짐 #}
   <form method="post">
     <input type="text" name="title" placeholder="제목" maxlength="100" value="{{ post.title }}" required>
     <textarea name="content" rows="10" placeholder="내용" required>{{ post.content }}</textarea>

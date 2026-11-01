@@ -6,10 +6,12 @@
   <small>익명 · {{ post.created_at }}</small>
   <p class="content">{{ post.content }}</p>
 
+  {# 좋아요 버튼 #}
   <form action="/post/{{ post.id }}/like" method="post" class="inline">
     <button class="btn">❤️ 좋아요 {{ like_count }}</button>
   </form>
 
+  {# 내 글일 때만 수정/삭제 버튼 #}
   {% if session.user_id == post.user_id %}
     <a href="/post/{{ post.id }}/edit" class="btn">수정</a>
     <form action="/post/{{ post.id }}/delete" method="post" class="inline" onsubmit="return checkDelete()">
@@ -20,10 +22,12 @@
 
 <div class="box">
   <h2>💬 댓글</h2>
+  {# 댓글 목록 #}
   {% for comment in comments %}
     <p><b>{{ comment.nickname }}</b> {{ comment.content }} <small>{{ comment.created_at }}</small></p>
   {% endfor %}
 
+  {# 로그인했을 때만 댓글 입력창 #}
   {% if session.user_id %}
     <form action="/post/{{ post.id }}/comment" method="post">
       <textarea name="content" rows="3" maxlength="500" required></textarea>

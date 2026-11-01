@@ -7,9 +7,11 @@
   <link rel="stylesheet" href="/static/style.css">
 </head>
 <body>
+  {# 모든 페이지에 공통으로 들어가는 틀 #}
   <header>
     <a href="/" class="logo">🎋 익명 대나무숲</a>
     <nav>
+      {# 로그인 여부에 따라 다른 메뉴 #}
       {% if session.user_id %}
         <span>{{ session.username }}님</span>
         <a href="/write" class="btn">글쓰기</a>
@@ -22,10 +24,12 @@
   </header>
 
   <main>
+    {# flash()로 보낸 알림 메시지 #}
     {% for message in get_flashed_messages() %}
       <p class="flash">{{ message }}</p>
     {% endfor %}
 
+    {# 각 페이지 내용이 들어가는 자리 #}
     {% block content %}{% endblock %}
   </main>
 
