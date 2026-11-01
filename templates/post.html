@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="box">
+  <h1>{{ post.title }}</h1>
+  <small>익명 · {{ post.created_at }}</small>
+  <p class="content">{{ post.content }}</p>
+
+  <form action="/post/{{ post.id }}/like" method="post" class="inline">
+    <button class="btn">❤️ 좋아요 {{ like_count }}</button>
+  </form>
+
+  {% if session.user_id == post.user_id %}
+    <a href="/post/{{ post.id }}/edit" class="btn">수정</a>
+    <form action="/post/{{ post.id }}/delete" method="post" class="inline" onsubmit="return checkDelete()">
+      <button class="btn">삭제</button>
+    </form>
+  {% endif %}
+</div>
+
+<div class="box">
+  <h2>💬 댓글</h2>
+  {% for comment in comments %}
+    <p><b>{{ comment.nickname }}</b> {{ comment.content }} <small>{{ comment.created_at }}</small></p>
+  {% endfor %}
+
+  {% if session.user_id %}
+    <form action="/post/{{ post.id }}/comment" method="post">
+      <textarea name="content" rows="3" maxlength="500" required></textarea>
+      <button class="btn">댓글 달기</button>
+    </form>
+  {% endif %}
+</div>
+
+<a href="/" class="btn">목록으로</a>
+
+{% endblock %}

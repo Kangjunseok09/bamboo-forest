@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="box">
+  <h2>🔥 좋아요 TOP 5</h2>
+  <ol>
+    {% for post in hot %}
+      <li><a href="/post/{{ post.id }}">{{ post.title }}</a> ❤️ {{ post.like_count }}</li>
+    {% endfor %}
+  </ol>
+</div>
+
+<form action="/" method="get" class="search">
+  <input type="text" name="q" value="{{ q }}" placeholder="제목 검색">
+  <button class="btn">검색</button>
+</form>
+
+{% for post in posts %}
+  <a href="/post/{{ post.id }}" class="box post">
+    <b>{{ post.title }}</b>
+    <small>{{ post.created_at }}</small>
+  </a>
+{% endfor %}
+
+{% endblock %}

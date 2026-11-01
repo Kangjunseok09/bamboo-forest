@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>익명 대나무숲</title>
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+  <header>
+    <a href="/" class="logo">🎋 익명 대나무숲</a>
+    <nav>
+      {% if session.user_id %}
+        <span>{{ session.username }}님</span>
+        <a href="/write" class="btn">글쓰기</a>
+        <a href="/logout" class="btn">로그아웃</a>
+      {% else %}
+        <a href="/login" class="btn">로그인</a>
+        <a href="/register" class="btn">회원가입</a>
+      {% endif %}
+    </nav>
+  </header>
+
+  <main>
+    {% for message in get_flashed_messages() %}
+      <p class="flash">{{ message }}</p>
+    {% endfor %}
+
+    {% block content %}{% endblock %}
+  </main>
+
+  <footer>made by 강준석</footer>
+
+  <script src="/static/main.js"></script>
+</body>
+</html>

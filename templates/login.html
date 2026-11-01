@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="box">
+  <h1>로그인</h1>
+  <form method="post">
+    <input type="text" name="username" placeholder="아이디" required>
+    <input type="password" name="password" placeholder="비밀번호" required>
+    <button class="btn">로그인</button>
+  </form>
+</div>
+
+{% endblock %}
