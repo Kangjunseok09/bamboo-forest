@@ -74,6 +74,10 @@ input, textarea {
   margin: 0;
 }
 
+.search select {
+  padding: 8px;
+}
+
 .search .btn {
   white-space: nowrap;
 }

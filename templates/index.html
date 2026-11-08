@@ -11,9 +11,14 @@
   </ol>
 </div>
 
-{# 검색: ?q=검색어 로 전송 #}
+{# 검색: ?type=기준&q=검색어 로 전송 #}
 <form action="/" method="get" class="search">
-  <input type="text" name="q" value="{{ q }}" placeholder="제목 검색">
+  <select name="type">
+    <option value="all" {% if search_type == "all" %}selected{% endif %}>전체</option>
+    <option value="title" {% if search_type == "title" %}selected{% endif %}>제목</option>
+    <option value="content" {% if search_type == "content" %}selected{% endif %}>내용</option>
+  </select>
+  <input type="text" name="q" value="{{ q }}" placeholder="검색어 입력">
   <button class="btn">검색</button>
 </form>
 

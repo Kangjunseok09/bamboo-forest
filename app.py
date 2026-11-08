@@ -23,11 +23,21 @@ def get_db():
 @app.route("/")
 def index():
     q = request.args.get("q", "")  # 검색어 (없으면 빈 문자열)
+    search_type = request.args.get("type", "all")  # 검색 기준: title / content / all
+    keyword = "%" + q + "%"
 
     db = get_db()
     cur = db.cursor()
     # %s 자리에 값을 따로 넘겨서 SQL Injection 방지
-    cur.execute("SELECT * FROM posts WHERE title LIKE %s ORDER BY id DESC", ("%" + q + "%",))
+    # 컬럼 이름은 사용자 입력을 그대로 넣지 않고, 정해진 SQL 중에서만 고름
+    if search_type == "title":
+        cur.execute("SELECT * FROM posts WHERE title LIKE %s ORDER BY id DESC", (keyword,))
+    elif search_type == "content":
+        cur.execute("SELECT * FROM posts WHERE content LIKE %s ORDER BY id DESC", (keyword,))
+    else:
+        search_type = "all"
+        cur.execute("SELECT * FROM posts WHERE title LIKE %s OR content LIKE %s ORDER BY id DESC",
+                    (keyword, keyword))
     posts = cur.fetchall()
 
     # 좋아요가 많은 글 5개 (JOIN + GROUP BY)
@@ -41,7 +51,7 @@ def index():
     hot = cur.fetchall()
     db.close()
 
-    return render_template("index.html", posts=posts, hot=hot, q=q)
+    return render_template("index.html", posts=posts, hot=hot, q=q, search_type=search_type)
 
 
 # 회원가입
